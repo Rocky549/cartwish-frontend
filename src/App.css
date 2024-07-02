@@ -1,0 +1,4 @@
+.app{
+  display: grid;  /* we want 2 rows 1 for navbar 80px and one for main autosize so used grid  */
+  grid-template-rows: 80px auto;
+}
