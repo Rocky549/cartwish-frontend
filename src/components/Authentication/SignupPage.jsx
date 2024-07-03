@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 import { useState } from "react";
-import signUp from "../../services/userServices";
+import signUp, { getUser } from "../../services/userServices";
 import { Navigate } from "react-router-dom";
 //import { useNavigate } from "react-router-dom";
 
