@@ -29,7 +29,7 @@ const App = () => {
       //const jwtToken=localStorage.getItem("token");
       //const jwtUser=jwtDecode(jwtToken);
       const jwtUser=getUser();
-      if(Date.now() >= jwtUser.exp*1000){
+      if(Date.now() >= jwtUser?.exp*1000){
         localStorage.removeItem("token");
         location.reload();
       }else{
