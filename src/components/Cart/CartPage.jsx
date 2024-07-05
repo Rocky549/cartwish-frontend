@@ -3,7 +3,7 @@ import "./CartPage.css";
 import remove from "../../assets/remove.png";
 import Table from "../Common/Table";
 import QuantityInput from "../SingleProduct/QuantityInput";
-import { useEffect, useState, useContext } from "react";
+import { memo, useContext, useMemo } from "react";
 import UserContext from "../../Contexts/UserContext"
 import CartContext from "../../Contexts/CartContext";
 import checkOutApi from "../../services/OrderServices";
@@ -11,16 +11,15 @@ import { toast } from "react-toastify";
 
 // eslint-disable-next-line react/prop-types
 const CartPage = () => {
-  const [subTotal,setSubTotal]=useState(0);
   const user=useContext(UserContext);
   const {cart,removeFromCart,updateCart,setCart}=useContext(CartContext);
 
-  useEffect(()=>{
+  const subTotal=useMemo(()=>{
     let total=0;
     cart.forEach((item)=>{
         total+=item.product.price * item.quantity
     })
-    setSubTotal(total);
+    return total;
   },[cart])
 
  const checkout= () =>{
@@ -85,4 +84,4 @@ checkOutApi().then((res)=>toast.success("Order Placed Successfully"))
   );
 };
 
-export default CartPage;
+export default memo(CartPage);

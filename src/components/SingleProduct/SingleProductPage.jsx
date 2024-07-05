@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { memo, useContext, useState } from 'react'
 import config from '../../config.json'
 import './SingleProductPage.css'
 import QuantityInput from './QuantityInput';
@@ -40,4 +40,4 @@ const SingleProductPage = () => {
   )
 }
 
-export default SingleProductPage
+export default memo(SingleProductPage)

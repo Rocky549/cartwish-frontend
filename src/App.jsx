@@ -1,23 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 
 import './App.css'
 import Navbar from './components/NavBar/Navbar';
 import Routing from './components/Routes/Routing';
-//import { jwtDecode } from 'jwt-decode';
 import { getJwt, getUser } from './services/userServices';
 import setAuthToken from './utils/setAuthToken';
 import { addToCartApi, decreaseProductApi, getCartApi, increaseProductApi, removeFromCartApi } from './services/cartServices';
 import 'react-toastify/dist/ReactToastify.css'
 import UserContext from './Contexts/UserContext'
-// import Home from './components/Home/Home';
-// import ProductsPage from './components/Products/ProductsPage';
-// import SingleProductPage from './components/SingleProduct/SingleProductPage';
-// import CartPage from './components/Cart/CartPage';
-// import MyOrderPage from './components/MyOrder/MyOrderPage';
-// import LoginPage from './components/Authentication/LoginPage';
-// import SignupPage from './components/Authentication/SignupPage';
-import cartContext from './Contexts/CartContext';
 import CartContext from './Contexts/CartContext';
 
 setAuthToken(getJwt());
@@ -39,16 +30,16 @@ const App = () => {
   },[]);
 
   
-  const getCart = () => {
+  const getCart = useCallback(() => {
     getCartApi()
     .then((res)=>{
       setCart(res.data)
     }).catch((err)=>{
       toast.error("Something Went Wrong"+err)
     });
-  }
+  },[user])
 
-  const addToCart = (product,quantity) => {
+  const addToCart = useCallback((product,quantity) => {
     //if product already exist then ony add quantity to cart if not add product and qty both
       const updatedCart=[...cart];
       const isExistProductIndex = updatedCart.findIndex(item=>item.product._id===product._id);
@@ -68,9 +59,9 @@ const App = () => {
         toast.error("Failed To Add Product "+err);
         setCart(cart);
       })
-  }
+  },[cart])
 
-  const updateCart = (type,id) =>{
+  const updateCart = useCallback((type,id) =>{
     const oldCart=[...cart]
     const updatedCart=[...cart];
     const productIndex=updatedCart.findIndex(item=> item.product._id === id);
@@ -90,7 +81,7 @@ const App = () => {
       })
     }
     setCart(updatedCart);
-  }
+  },[cart])
 
   const removeFromCart = (id) =>{
     const oldCart = [...cart];

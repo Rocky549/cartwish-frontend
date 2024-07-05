@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { memo, useContext } from 'react'
 import config from '../../config.json'
 import './ProductCard.css'
 import star from '../../assets/white-star.png'
@@ -37,4 +37,4 @@ const ProductCard = ({product}) => {
   )
 }
 
-export default ProductCard
+export default memo(ProductCard)
